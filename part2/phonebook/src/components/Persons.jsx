@@ -1,11 +1,21 @@
-const Persons = ({persons, filter}) => {
+const Persons = ({persons, filter, handleDelete}) => {
     return (
-        persons.map((person) => {
-            if (person.name.toLowerCase().includes(filter.toLowerCase()) || filter === ""){
-                return (<p key={person.name}>{person.name} {person.number}</p>)
-            }
-        })
+        <table>
+            <tbody>
+                {persons.map((person) => {
+                    if (person.name.toLowerCase().includes(filter.toLowerCase()) || filter === ""){
+                        return (
+                            <tr key={person.id}>
+                                <td >{person.name}</td>
+                                <td>{person.number}</td>
+                                <td><button onClick={() => handleDelete(person.id)}>Delete</button></td>
+                            </tr>
+                            
+                        )
+                    }
+                })}
+            </tbody>
+        </table>
     )
 }
-
 export default Persons
