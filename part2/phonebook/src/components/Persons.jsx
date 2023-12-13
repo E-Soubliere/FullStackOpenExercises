@@ -10,7 +10,6 @@ const Persons = ({persons, filter, handleDelete}) => {
                                 <td>{person.number}</td>
                                 <td><button onClick={() => handleDelete(person.id)}>Delete</button></td>
                             </tr>
-                            
                         )
                     }
                 })}

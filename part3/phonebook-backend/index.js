@@ -3,6 +3,9 @@ const bodyParser = require("body-parser");
 var morgan = require('morgan')
 const app = express()
 
+const cors = require('cors')
+app.use(cors())
+app.use(express.static('dist'))
 app.use(bodyParser.json());
 
 morgan.token('body', req => {
@@ -61,10 +64,25 @@ app.delete('/api/persons/:id', (request, response) => {
     response.status(204).end()
 })
 
+app.put('/api/persons/:id', (request, response) => {
+    const body = request.body
+
+    if (body.name && body.number) {
+        const person = persons.find(p => p.name === body.name)
+        person.number = body.number
+        if (person) {
+            persons = persons.map(p => p.name === person.name ? {...p, number: person.number} : p)
+            response.status(200).end()
+        } else {
+            response.status(402).json({error: "User not found"})
+        }
+    }
+})
+
 app.post('/api/persons', (request, response) => {
     const body = request.body
 
-    if (request.body.name && request.body.number) {
+    if (body.name && body.number) {
         const person = {
             id: persons.length + 1,
             name: request.body.name,
@@ -78,14 +96,14 @@ app.post('/api/persons', (request, response) => {
                 ...persons,
                 person
             ]
-            response.status(200).end()
+            response.status(200).json(person).end()
         }
     } else {
         response.status(400).json({error: "Name or number missing"})
     }
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`)
 })
