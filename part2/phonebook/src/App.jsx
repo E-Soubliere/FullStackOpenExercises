@@ -39,7 +39,7 @@ const App = () => {
             setNewNumber("")
           })
           .catch((e) => {
-            setInfo({ message: `Unable to update contact for ${updatePerson.name}`, error: true})
+            setInfo({ message: e.response.data.error, error: true})
             setTimeout(() => {
               setInfo({message: '', error: false})
             }, 5000)
@@ -60,7 +60,7 @@ const App = () => {
           }, 5000)
         })
         .catch((e) => {
-          setInfo({ message: `Unable to create contact for ${newPerson.name}`, error: true})
+          setInfo({ message: e.response.data.error, error: true})
           setTimeout(() => {
             setInfo({message: '', error: false})
           }, 5000)

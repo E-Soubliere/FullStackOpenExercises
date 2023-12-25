@@ -4,7 +4,6 @@ const baseURL = '/api/persons'
 const getAll = () => {
     return axios.get(baseURL)
 }
-
 const create = newObject => {
     return axios.post(baseURL, newObject)
 }

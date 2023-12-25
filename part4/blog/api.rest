@@ -1,0 +1,46 @@
+GET http://localhost:3001/api/blogs
+
+###
+
+POST http://localhost:3001/api/blogs HTTP/1.1
+Content-Type: application/json
+
+{
+        "title": "This is a test blog",
+        "author": "Robert F. Test",
+        "url": "example.com",
+        "userID": "65888e3d043ab5d3a54a4669"
+}
+
+###
+
+DELETE http://localhost:3001/api/blogs/658831298fc43d541678c335 HTTP/1.1
+
+###
+
+PUT http://localhost:3001/api/blogs/65863424d25acf57222f9caa HTTP/1.1
+
+###
+
+POST http://localhost:3001/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+        "username": "Test",
+        "name": "Test",
+        "password": "password"
+}
+
+###
+
+GET http://localhost:3001/api/users HTTP/1.1
+
+###
+
+POST http://localhost:3001/api/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "Test",
+    "password": "password"
+}
