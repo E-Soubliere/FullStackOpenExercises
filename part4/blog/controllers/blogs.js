@@ -4,18 +4,14 @@ const User = require('../models/user')
 const Middleware = require('../utils/middleware')
 
 blogsRouter.get('/', async (request, response,) => {
-    await Blog
-      .find({})
-      .then(blogs => {
-        response.json(blogs)
-      })
+    const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
+    return response.status(200).json(blogs)
 })
 
 blogsRouter.post('/', Middleware.userExtractor, async (request, response, next) => {
     const body = request.body
     const user = request.user
-    console.log("=================================")
-    console.log(user)
+
     const newBlog = new Blog({
         title:  body.title,
         author: body.author,
@@ -40,7 +36,7 @@ blogsRouter.post('/', Middleware.userExtractor, async (request, response, next) 
 blogsRouter.delete('/:id', Middleware.userExtractor, async (request, response) => {
     const id = request.params.id
     const user = request.user
-    console.log(user)
+
     const deleteBlog = await Blog.findOne({_id: user.id})
     if (deleteBlog.id !== user.id) {
         return response.status(401).json({error: 'Only the blog owner can delete this blog'})
